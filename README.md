@@ -5,7 +5,12 @@ I used this network in "Carvana-Image-Masking-Challenge-Competition".
 
 ![network](https://github.com/lyakaap/Kaggle-Carvana-3rd-place-solution/blob/master/network.png)
 
-put all training data, testing data, masks, sample_submission.csv and train_masks.csv in input/
+## Before training and testing
+Put all training data, testing data, masks, sample_submission.csv and train_masks.csv in input/
+
+Create submit/ for make_submission.py
+
+Create weights/ for model weights
 
 ## model.py
 A script of model definition.
@@ -14,7 +19,7 @@ A script of model definition.
 A script of loss functions definition.
 
 ## train.py
-start training by ```python train.py```
+Start training by ```python train.py```
 
 ## make_submission.py
-make submission file by ```python make_submission```
+Make submission file by ```python make_submission```
