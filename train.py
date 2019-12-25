@@ -126,7 +126,7 @@ if __name__ == '__main__':
                                  save_best_only=True,
                                  mode='max')]
     ##################################################################
-    #model.load_weights('weights/1225_27.hdf5')
+    #model.load_weights('weights/model_weights.hdf5')
 
     model.fit_generator(generator=train_generator(ids_train),
                         steps_per_epoch=np.ceil(float(len(ids_train)) / float(BATCH_SIZE)),
