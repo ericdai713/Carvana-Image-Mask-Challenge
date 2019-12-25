@@ -122,7 +122,7 @@ if __name__ == '__main__':
                                    epsilon=1e-4,
                                    mode='max'),
                  ModelCheckpoint(monitor='val_dice_coef',
-                                 filepath='model_weights.hdf5',
+                                 filepath='weights/model_weights.hdf5',
                                  save_best_only=True,
                                  mode='max')]
     ##################################################################
