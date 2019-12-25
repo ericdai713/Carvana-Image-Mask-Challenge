@@ -51,34 +51,17 @@ def train_generator(df):
             ids_train_batch = df.iloc[shuffle_indices[start:end]]
             
             for _id in ids_train_batch.values:
-                #print(_id)
                 img = cv2.imread('input/train_hq/{}.jpg'.format(_id))
-                #if img is None:
-                #    print('img')
                 img = cv2.resize(img, (WIDTH, HEIGHT), interpolation=cv2.INTER_AREA)
-                #tmask = Imimg = Image.open('input/train_masks/{}_mask.gif'.format(_id))
-                #tmask.save('input/train_masks/{}_mask.gif'.format(_id)+".png",'png', optimize=True, quality=70)
-                #print('1')
                 mask = cv2.imread('input/train_masks/{}_mask.png'.format(_id), cv2.IMREAD_GRAYSCALE)
-                #print('2')
-                #if mask is None:
-                #    print('mask')
-                #else:
-                #    print(_id)
                 mask = cv2.resize(mask, (WIDTH, HEIGHT), interpolation=cv2.INTER_AREA)
-                #cv2.imwrite('mask_{}.png'.format(_id), mask)
-                #print('3')
                 mask = np.expand_dims(mask, axis=-1)
-                #print('4')
                 assert mask.ndim == 3
-                #print('5')
-                # === You can add data augmentations here. === #
                 if np.random.random() < 0.5:
-                    img, mask = img[:, ::-1, :], mask[..., ::-1, :]  # random horizontal flip
-                
+                    img, mask = img[:, ::-1, :], mask[..., ::-1, :]
                 x_batch.append(img)
                 y_batch.append(mask)
-                #break
+
             x_batch = np.array(x_batch, np.float32) / 255.
             y_batch = np.array(y_batch, np.float32) / 255.
             
@@ -98,8 +81,6 @@ def valid_generator(df):
             for _id in ids_train_batch.values:
                 img = cv2.imread('input/train_hq/{}.jpg'.format(_id))
                 img = cv2.resize(img, (WIDTH, HEIGHT), interpolation=cv2.INTER_AREA)
-                #tmask = Imimg = Image.open('input/train_masks/{}_mask.gif'.format(_id))
-                #tmask.save('input/train_masks/{}_mask.gif'.format(_id)+".png",'png', optimize=True, quality=70)
                 mask = cv2.imread('input/train_masks/{}_mask.png'.format(_id), cv2.IMREAD_GRAYSCALE)
                 mask = cv2.resize(mask, (WIDTH, HEIGHT), interpolation=cv2.INTER_AREA)
                 mask = np.expand_dims(mask, axis=-1)
@@ -120,23 +101,12 @@ if __name__ == '__main__':
     ids_train = df_train['img'].map(lambda s: s.split('.')[0])
 
     ids_train, ids_valid = train_test_split(ids_train, test_size=0.1)
-    '''
-    def get_dilated_unet(
-        input_shape=(1918, 1280, 3),
-        mode='cascade',
-        filters=44,
-        n_block=3,
-        lr=0.0001,
-        loss=bce_dice_loss,
-        n_class=1
-        ):
-    '''
     #    lr=0.0001,
     model = get_dilated_unet(
         input_shape=(1280, 1280, 3),
         mode='cascade',
         filters=32,
-        lr=0.00001,
+        lr=0.0001,
         n_class=1
     )
 
@@ -156,7 +126,7 @@ if __name__ == '__main__':
                                  save_best_only=True,
                                  mode='max')]
     ##################################################################
-    model.load_weights('weights/1225_27.hdf5')
+    #model.load_weights('weights/1225_27.hdf5')
 
     model.fit_generator(generator=train_generator(ids_train),
                         steps_per_epoch=np.ceil(float(len(ids_train)) / float(BATCH_SIZE)),
