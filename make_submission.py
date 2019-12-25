@@ -33,7 +33,7 @@ for _id in ids_test:
     names.append('{}.jpg'.format(_id))
 
 rles = []
-filepath = 'weights/1225_27.hdf5'
+filepath = 'weights/model_weights.hdf5'
 
 cfg = tf.ConfigProto()
 sess = tf.Session(config = cfg)
