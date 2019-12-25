@@ -67,7 +67,7 @@ def data_loader(q, ):
 
 
 def predictor(q, ):
-    #ind=0
+
     for _ in tqdm(range(0, len(ids_test), BATCH_SIZE)):
         x_batch = q.get()
         
@@ -87,15 +87,12 @@ def predictor(q, ):
             mask = prob > 0.5
             rle = run_length_encode(mask)
             rles.append(rle)
-        #if (ind > 5):
-        #    break
-        #ind = ind + 1
 
 q = queue.Queue(maxsize=q_size)
-#print("hi")
+
 t1 = threading.Thread(target=data_loader, name='DataLoader', args=(q,))
 t2 = threading.Thread(target=predictor, name='Predictor', args=(q,))
-#print("h2")
+
 t1.start()
 t2.start()
 
